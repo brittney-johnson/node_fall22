@@ -6,7 +6,7 @@
 }
 
 body{
-    background-color: antiquewhite;
+    background-color: #000000;
 }
 
 .todo-container{
@@ -78,13 +78,13 @@ body{
     flex-grow: 2;
 }
 .todo-list-item .edit{
-    color: rbg(143, 233, 58);
+    color: #ff00d4;
     margin-right: 10px;
     cursor: pointer;
     text-decoration: none;
 }
 .todo-list-item .remove{
-    color: rbg(243, 96, 96);
+    color: #ff00d4;
     margin-right: 5px;
     cursor: pointer;
     text-decoration: none;
