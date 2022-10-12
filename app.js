@@ -1,3 +1,4 @@
+const { response } = require('express');
 var express = require('express');
 var mongoose = require('mongoose');
 var app = express();
@@ -15,8 +16,16 @@ db.on('error', console.error.bind(console, "MongoDb connection error: "))
 
 
 app.get('/', function(req, res){
-    res.render('todo.ejs');
+    Todo.find(function(err, todo){
+        console.log(todo)
+        if(err){
+            res.json({"Error: ": err})
+        } else {
+            res.render('todo.ejs', {todoList: todo});
+        }
+    })
 })
+
 //creates item in DB
 app.post('/', (req, res) => {
     let newTodo = new Todo({
@@ -27,17 +36,19 @@ app.post('/', (req, res) => {
         if(err){
             res.json({"Error: ": err})
         }else{
-            res.json({"Status: ": "Successful", "ObjectId": todo.id})
+            res.redirect('/');
         }
     })
 })
 //modifies item in DB
 app.put('/', (req, res) => {
-    let id = req.body.check;
+    let id = req.body.id;
     let error = {}
+    console.log(req.body)
     if(typeof id === "string"){
         Todo.updateOne({_id: id}, {done: true}, function(err){
             if(error){
+                console.log(error)
                 err = error
             }
         })
@@ -53,7 +64,7 @@ app.put('/', (req, res) => {
     if(err){
         res.json({"Error: ": err})
     }else{
-        res.json({"Status: ": "Successful"})
+        res.redirect('/');
     }
 })
 
@@ -63,12 +74,13 @@ app.delete('/', (req, res) => {
     if(typeof id === "string"){
         Todo.deleteOne({_id: id}, function(err){
             if(error){
+                console.log(error)
                 err = error
             }
         })
     } else if (typeof id === "object") {
         id.forEach( ID =>{
-            Todo.deleteOne({_id: ID}, function(err){
+            Todo.deleteOne({_id: id}, function(err){
                 if(error){
                     err = error
                 }
@@ -78,7 +90,7 @@ app.delete('/', (req, res) => {
     if(err){
         res.json({"Error: ": err})
     }else{
-        res.json({"Status: ": "Successful"})
+        res.redirect('/');
     }
 })
 
