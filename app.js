@@ -1,7 +1,7 @@
 const { response } = require('express');
 var express = require('express');
 var mongoose = require('mongoose');
-var axios = require('axios').default;
+var axios = require('axios');
 var app = express();
 const bodyParser = require('body-parser');
 
@@ -25,7 +25,7 @@ app.get('/', function (req, res) {
             if (err) {
                 res.json({ "Error: ": err })
             } else {
-                res.render('todo.ejs', { todoList: todo, comicData: response.data });
+                res.render('todo.ejs', {todoList: todo, comicData: response.data});
             }
         })
     }).catch(function (error) {

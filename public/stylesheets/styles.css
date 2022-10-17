@@ -93,3 +93,10 @@ body{
 .todo-list-item .strike-through{
     text-decoration: line-through;
 }
+
+img {
+    display: block;
+    margin: auto;
+    width: 40%;
+    height: 40%;
+  }
